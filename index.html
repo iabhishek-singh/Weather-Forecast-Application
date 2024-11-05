@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- link file & CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>Weather Forecast </title>
 </head>
+
 <body>
-    
-    <script src="app.js"></script>
+
+    <h1 class="text-3xl head font-bold text-center">Weather Forecast</h1>
+    <div class="inputDiv">
+        <input type="text" id="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block sm:w-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Enter City Name" required />
+        <button type="submit"
+            class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search
+            <i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="error head font-bold text-center">
+        <p>Invalid City Name</p>
+    </div>
+    <div class="wether">
+        <img class="wetherImage" src="cloudeSun.png" alt="Clould image">
+        <h1 class="temp">22°c</h1>
+        <h2 class="city">New York</h2>
+        <div class="details">
+            <div class="col">
+                <img src="water-512.webp" alt="wather">
+                <div>
+                    <p class="humidity">50%</p>
+                    <p>Humidity</p>
+                </div>
+            </div>
+            <div class="col">
+                <img src="wind.png" alt="">
+                <div>
+                    <p class="wind">15 km/h</p>
+                    <p>Wind Seepd</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hourly">
+
+    </div>
+
+
+    <script src="app.js" defer></script>
 </body>
-</html>
+
+<!-- </html>hover:bg-blue-800 -->
+<!-- https://cdn-icons-png.freepik.com/256/16221/16221836.png?semt=ais_hybrid -->
+
+<!-- https://static-00.iconduck.com/assets.00/humidity-icon-144x118-o5l07jkd.png -->

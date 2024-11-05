@@ -1,0 +1,91 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    /* background-color: cadetblue; */
+    /* background-color: cadetblue; */
+    /*height: 935px;
+    background-color:lightgray; 
+    background-image: linear-gradient( black , grey); */
+    height: 935px;
+    /* background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%); */
+    background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
+}
+.head{
+    margin:20px;
+    color: #fafafa;
+}
+
+.inputDiv {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.inputDiv input {
+    text-align: center;
+    color: goldenrod;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.inputDiv button:hover {
+    background-color: black;
+    /* color: white; */
+    color: goldenrod;
+}
+
+.inputDiv input:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.wether {
+    width: 500px;
+    height: 600px;
+    margin: auto;
+    background: linear-gradient(135deg, #00feba, #5b548a);
+    border-radius:20px;
+    margin:50px auto 0;
+    padding: 40px 35px;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+}
+.wetherImage{
+    margin: auto;
+    width: 250px;
+}
+.temp, .city{
+    color: #fafafa;
+    text-align: center;
+    font-size: 29px;
+    font-weight: bold;
+}
+.details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0 20px;
+    margin-top:50px ;
+}
+.col{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: #fafafa;
+    font-weight: bold;
+    font-size: 20px;
+}
+.col img{
+    width: 55px;
+    margin-right: 8px;
+}
+.wether{
+    display: none;
+}
+.error{
+    display: none;
+}
