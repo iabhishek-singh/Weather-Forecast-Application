@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- link file & CDN -->
+    <link rel="shortcut icon" href="clear.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -15,48 +16,251 @@
 
 <body>
 
-    <h1 class="text-3xl head font-bold text-center">Weather Forecast</h1>
-    <div class="inputDiv">
-        <input type="text" id="text"
-            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block sm:w-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Enter City Name" required />
-        <button type="submit"
-            class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search
-            <i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-    <div class="error head font-bold text-center">
-        <p>Invalid City Name</p>
-    </div>
-    <div class="wether">
-        <img class="wetherImage" src="cloudeSun.png" alt="Clould image">
-        <h1 class="temp">22°c</h1>
-        <h2 class="city">New York</h2>
-        <div class="details">
-            <div class="col">
-                <img src="water-512.webp" alt="wather">
-                <div>
-                    <p class="humidity">50%</p>
-                    <p>Humidity</p>
+    <div class="containr">
+        <div class="header">
+            <h1 class="text-3xl head font-bold ">Weather Forecast</h1>
+            <div class="weather-input">
+                <input type="text" id="city_input"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block sm:w-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter City Name" required />
+                <button type="submit" id="searchBtn"
+                    class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search
+                    <i class="fa-solid fa-magnifying-glass"></i></button>
+                <!-- locations -->
+                <button type="submit" id="locationBtn"
+                    class="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <i class="fa-solid fa-location-crosshairs"></i> Current
+                    locations
+                </button>
+            </div>
+        </div>
+        <div class="weather-data">
+            <div class="weather-left">
+                <div class="card">
+                    <div class="current-weather">
+                        <div class="details">
+                            <P>Now</P>
+                            <h2>__&deg;c</h2>
+                            <p>___</p>
+                        </div>
+                        <div class="weather-icon">
+                            <img src="cloude.png" alt="cloude img">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-footer">
+                        <p><i class="fa-solid fa-calendar"></i> _____</p>
+                        <p><i class="fa-solid fa-location-dot"></i> ______</i></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>5 day Forecast</h2>
+                    <div class="day-forecast">
+                        <div class="forecast-item">
+                            <div class="icon-wrapper">
+                                <img src="cloudeSun.png" alt="cloudeSun Image">
+                                <span>___&deg;c</span>
+                            </div>
+                            <p>_____</p>
+                            <p>_____</p>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="icon-wrapper">
+                                <img src="cloudeSun.png" alt="cloudeSun Image">
+                                <span>___&deg;c</span>
+                            </div>
+                            <p>_____</p>
+                            <p>_____</p>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="icon-wrapper">
+                                <img src="cloudeSun.png" alt="cloudeSun Image">
+                                <span>___&deg;c</span>
+                            </div>
+                            <p>_____</p>
+                            <p>_____</p>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="icon-wrapper">
+                                <img src="cloudeSun.png" alt="cloudeSun Image">
+                                <span>___&deg;c</span>
+                            </div>
+                            <p>_____</p>
+                            <p>_____</p>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="icon-wrapper">
+                                <img src="cloudeSun.png" alt="cloudeSun Image">
+                                <span>___&deg;c</span>
+                            </div>
+                            <p>_____</p>
+                            <p>_____</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <img src="wind.png" alt="">
-                <div>
-                    <p class="wind">15 km/h</p>
-                    <p>Wind Seepd</p>
+            <div class="weather-right">
+                <h2 class="head font-bold ">Today's Highilights</h2>
+                <div class="highilights">
+
+                    <div class="card">
+                        <div class="card-head">
+                            <p>Air Quality Index</p>
+                            <p class="air-index aqi-1">Good</p>
+                        </div>
+                        <div class="air-indices">
+                            <i class="fa-solid fa-wind fa-3x"></i>
+                            <div class="item">
+                                <p>PM2.5</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>PM10</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>SO2</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>CO</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>NO</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>NO2</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>NH3</p>
+                                <h2>___</h2>
+                            </div>
+                            <div class="item">
+                                <p>O3</p>
+                                <h2>___</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <p>Sunrise & Sunset</p>
+                        </div>
+                        <div class="sunrise-sunset">
+                            <div class="item">
+                                <div class="icon">
+                                    <img src="https://cdn-icons-png.flaticon.com/256/8098/8098355.png" alt="weather Image">
+                                </div>
+                                <div>
+                                    <p>Sunrise</p>
+                                    <h2>____</h2>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="icon">
+
+                                    <img src="https://cdn.icon-icons.com/icons2/3609/PNG/512/climate_forecast_weather_evening_night_dusk_sunset_icon_226645.png"
+                                        alt="weather Image">
+                                </div>
+                                <div>
+                                    <p>Sunset</p>
+                                    <h2>____</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <p>Humidity</p>
+                        </div>
+                        <card class="card-item">
+                            <i class="fa-solid fa-droplet"></i>
+                            <h2 id="humidityval">____%</h2>
+                        </card>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <p>Pressure</p>
+                        </div>
+                        <card class="card-item">
+                            <i class="fa-solid fa-compass"></i>
+                            <h2 id="pressureval">____hpa</h2>
+                        </card>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <p>Visibility</p>
+                        </div>
+                        <card class="card-item">
+                            <i class="fa-solid fa-eye"></i>
+                            <h2 id="visibilityval">____km</h2>
+                        </card>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <p>wind speed</p>
+                        </div>
+                        <card class="card-item">
+                            <i class="fa-solid fa-location-arrow"></i>
+                            <h2 id="windSpeedval">____m/s</h2>
+                        </card>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <p>Feels Liks</p>
+                        </div>
+                        <div class="card-item">
+                            <i class="fa-solid fa-temperature-three-quarters"></i>
+                            <h2 id="feelsval">____&deg;c</h2>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="head font-bold">Today at</h2>
+                <div class="hourly-forcecast">
+                    <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div>
+                    <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div> <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div> <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div> <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div> <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div>
+                    <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div> <div class="card">
+                        <p>9 AM</p>
+                        <img src="https://openweathermap.org/img/wn/04d.png" alt="weather Image">
+                        <p>_____&deg;c</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="hourly">
-
-    </div>
-
-
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="app.js" defer></script>
 </body>
 
-<!-- </html>hover:bg-blue-800 -->
-<!-- https://cdn-icons-png.freepik.com/256/16221/16221836.png?semt=ais_hybrid -->
+</html>
 
-<!-- https://static-00.iconduck.com/assets.00/humidity-icon-144x118-o5l07jkd.png -->

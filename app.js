@@ -1,60 +1,282 @@
-const searchBox = document.querySelector(".inputDiv input"); //Search Box
-const searchBtn = document.querySelector(".inputDiv button"); //Input Button
-const weatherIcon = document.querySelector(".wetherImage"); //For wether Image
-
-
+const cityInput = document.getElementById('city_input'); //Search Box
+const searchBtn = document.getElementById('searchBtn'); //Input Button
+const locationBtn = document.getElementById('locationBtn'); //Input Button
 const apikey = "664197ae1ba994280107e76d9578e89f"; //API KEY 
-const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="; // URL for current data fetch
-// Four days data
-const hourly = "https://pro.openweathermap.org/data/2.5/forecast/hourly?units=metric&q";
-async function checkWeather(city) {
-    // Current data(current)
-    const response = await fetch(apiUrl + city + `&appid=${apikey}`)
-    var data = await response.json();
-    console.log(data);
-    // 4 days data (hourly)
-    const responseTwo = await fetch(hourly + city + `&appid=${apikey}`)
-    var datahourly = await responseTwo.json();
-    console.log(datahourly);
+let currentWeatherCard = document.querySelectorAll('.weather-left .card')[0];
+let fiveDaysForecastCard = document.querySelector('.day-forecast'),
+    aqiCard = document.querySelectorAll('.highilights .card')[0],
+    sunriseCard = document.querySelectorAll('.highilights .card')[1],
+    aqiList = ['Good', 'Fair', 'Moderate', 'poor', 'Very poor'],
+    humidityval = document.getElementById('humidityval'),
+    pressureval = document.getElementById('pressureval'),
+    visibilityval = document.getElementById('visibilityval'),
+    windSpeedval = document.getElementById('windSpeedval'),
+    feelsval = document.getElementById('feelsval'),
+    hourlyForecastCard = document.querySelector('.hourly-forcecast');
 
-    // check Respons Code wether is correcr or not.
-    if (response.status && responseTwo == 404) {
-        document.querySelector(".error").style.display = "block";
-        document.querySelector(".hourly").style.display = "none";
-        document.querySelector(".wether").style.display = "none";
-    } else {
-        // current
-        document.querySelector(".city").innerHTML = data.name + " " + data.sys.country + "<br>Feels like <br>" + data.main.feels_like;
-        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
-        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-        document.querySelector(".wind").innerHTML = Math.round(data.wind.speed) + " km/h";
+function getWeatherDetails(name, lat, lon, country, state) {
+    let FORECAST_API_URL = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`,
+        WEATHER_API_URL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`,
+        AIR_POLLUTTION_API_URL = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apikey}`,
+        days = [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Satturday'
+        ],
+        months = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ];
 
-        // hourly
-        document.querySelector(".hourly").innerHTML = datahourly.name + " " + datahourly.sys.country + "<br>Feels like <br>" + datahourly.main.feels_like;
-        document.querySelector(".hourly").innerHTML = Math.round(datahourly.main.temp) + "°c";
-        document.querySelector(".hourly").innerHTML = datahourly.main.humidity + "%";
-        document.querySelector(".hourly").innerHTML = Math.round(datahourly.wind.speed) + " km/h";
+    // Air  pollution
+    fetch(AIR_POLLUTTION_API_URL).then(res => res.json()).then(data => {
+        let { co, no, no2, o3, so2, pm2_5, pm10, nh3 } = data.list[0].components;
+        aqiCard.innerHTML = `
+                <div class="card-head">
+                    <p>Air Quality Index</p>
+                    <p class="air-index aqi-${data.list[0].main.aqi}">${aqiList[data.list[0].main.aqi - 1]}</p>
+                </div>
+                <div class="air-indices">
+                        <i class="fa-solid fa-wind fa-3x"></i>
+                        <div class="item">
+                            <p>PM2.5</p>
+                            <h2>${pm2_5}</h2>
+                        </div>
+                        <div class="item">
+                            <p>PM10</p>
+                            <h2>${pm10}</h2>
+                        </div>
+                        <div class="item">
+                            <p>SO2</p>
+                            <h2>${so2}</h2>
+                        </div>
+                        <div class="item">
+                            <p>CO</p>
+                            <h2>${co}</h2>
+                        </div>
+                        <div class="item">
+                            <p>NO</p>
+                            <h2>${no}</h2>
+                        </div>
+                        <div class="item">
+                            <p>NO2</p>
+                            <h2>${no2}</h2>
+                        </div>
+                        <div class="item">
+                            <p>NH3</p>
+                            <h2>${nh3}</h2>
+                        </div>
+                        <div class="item">
+                            <p>O3</p>
+                            <h2>${o3}</h2>
+                        </div>
+                </div>
+            `;
+    }).catch(() => {
+        alert('Failed to fetch Air Quality Index');
+    });
 
-        // Upadate image based on weather
-        if (data.weather[0].main == "Clouds") {
-            weatherIcon.src = "cloude.png";
-        } else if (data.weather[0].main == "Clear") {
-            weatherIcon.src = "clear.png";
-        } else if (data.weather[0].main == "Rain") {
-            weatherIcon.src = "rain.webp";
-        } else if (data.weather[0].main == "Drizzle") {
-            weatherIcon.src = "drizzle.png";
-        } else if (data.weather[0].main == "Mist") {
-            weatherIcon.src = "mist.png";
+    // Current Temp 
+    fetch(WEATHER_API_URL).then(res => res.json()).then(data => {
+        let date = new Date();
+        currentWeatherCard.innerHTML = `
+                <div class="current-weather">
+                    <div class="details">
+                        <P>Now</P>
+                        <h2>${(data.main.temp - 273.15).toFixed(2)}&deg;c</h2>
+                        <p>${data.weather[0].description}</p>
+                    </div>
+                    <div class="weather-icon">
+                        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="cloude img">
+                    </div>
+                </div>
+                <hr>
+                <div class="card-footer">
+                    <p><i class="fa-solid fa-calendar"></i>  ${days[date.getDay()]}, ${date.getDate()}, ${months[date.getMonth()]} ${date.getFullYear()}</p>
+                    <p><i class="fa-solid fa-location-dot"></i>  ${name}, ${country} </i></p>
+                </div>
+        `;
+        let { sunrise, sunset } = data.sys,
+            { timezone, visibility } = data,
+            { humidity, pressure, feels_like } = data.main,
+            { speed } = data.wind,
+
+            sRiseTime = moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm A'),
+            sSetTime = moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm A')
+        sunriseCard.innerHTML = `
+             <div class="card-head">
+                <p>Sunrise & Sunset</p>
+            </div>
+            <div class="sunrise-sunset">
+                <div class="item">
+                    <div class="icon">
+                        <img src="https://cdn-icons-png.flaticon.com/256/8098/8098355.png" alt="weather Image">
+                    </div>
+                    <div>
+                        <p>Sunrise</p>
+                        <h2>${sRiseTime}</h2>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="icon">
+
+                        <img src="https://cdn.icon-icons.com/icons2/3609/PNG/512/climate_forecast_weather_evening_night_dusk_sunset_icon_226645.png"
+                            alt="weather Image">
+                    </div>
+                    <div>
+                        <p>Sunset</p>
+                        <h2>${sSetTime}</h2>
+                    </div>
+                </div>
+            </div>
+        `;
+        humidityval.innerHTML = `${humidity}%`;
+        pressureval.innerHTML = `${pressure} hPa`;
+        visibilityval.innerHTML = `${visibility / 1000}km`;
+        windSpeedval.innerHTML = `${speed}m/s`;
+        feelsval.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;c`;
+
+
+    }).catch(() => {
+        alert('Failed to fetch current weather ');
+    });
+
+    fetch(FORECAST_API_URL).then(res => res.json()).then(data => {
+        let hourlyForecast = data.list;
+        hourlyForecastCard.innerHTML = '';
+        for (i = 0; i <= 7; i++) {
+            let hrForecastDate = new Date(hourlyForecast[i].dt_txt);
+            let hr = hrForecastDate.getHours();
+            let a = 'PM';
+            if (hr < 12) a = 'AM';
+            if (hr == 0) hr = 12;
+            if (hr > 12) hr = hr - 12;
+            hourlyForecastCard.innerHTML += `
+                <div class="card">
+                    <p>${hr} ${a}</p>
+                    <img src="https://openweathermap.org/img/wn/${hourlyForecast[i].weather[0].icon}.png" alt="weather Image">
+                    <p>${(hourlyForecast[i].main.temp - 273.15).toFixed(2)}&deg;c</p>
+                </div>
+            `;
+        }
+        let uniqueForecastDays = [];
+        let fiveDaysForecast = data.list.filter(forecast => {
+            let forecastDate = new Date(forecast.dt_txt).getDate();
+            if (!uniqueForecastDays.includes(forecastDate)) {
+                return uniqueForecastDays.push(forecastDate)
+            }
+        });
+        fiveDaysForecastCard.innerHTML = '';
+        for (i = 1; i < fiveDaysForecast.length; i++) {
+            let date = new Date(fiveDaysForecast[i].dt_txt);
+            fiveDaysForecastCard.innerHTML += `
+                    <div class="forecast-item">
+                        <div class="icon-wrapper">
+                            <img src="https://openweathermap.org/img/wn/${fiveDaysForecast[i].weather[0].icon}@2x.png" alt="cloudeSun Image">
+                            <span>${(fiveDaysForecast[i].main.temp - 273.15).toFixed(2)}&deg;c</span>
+                        </div>
+                        <p>${date.getDate()} ${months[date.getMonth()]}</p>
+                        <p>${days[date.getDay()]}</p>
+                    </div>
+         `;
         }
 
-        document.querySelector(".wether").style.display = "block";
-        document.querySelector(".error").style.display = "none";
-        document.querySelector(".hourly").style.display = "none";
-    }
+    }).catch(() => {
+        alert('Failed to fetch Weather Forecast');
+    });
+}
+
+function getcityCoordinates() {
+    let cityName = cityInput.value;
+    if (!cityName) return;
+    let GEOCODING_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apikey}`;
+
+    fetch(GEOCODING_API_URL).then(res => res.json()).then(data => {
+        let { name, lat, lon, country, state } = data[0];
+        getWeatherDetails(name, lat, lon, country, state);
+
+    }).catch(() => {
+        alert(`Falied to Fetch coordinates of ${cityName}`)
+    });
+}
+
+function getUserCoordinates() {
+    navigator.geolocation.getCurrentPosition(position => {
+        let { latitude, longitude } = position.coords;
+        let REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apikey}`;
+
+        fetch(REVERSE_GEOCODING_URL).then(res => res.json()).then(data => {
+            let { name, country, state } = data[0];
+            getWeatherDetails(name, latitude, longitude, country, state);
+        }).catch(() => {
+            alert('Failed to Fetch coordinates');
+        })
+
+    }, error => {
+        if (error.code === error.PERMISSION_DENIED) {
+            alert('Geolocation permission denied. Please reset location pemission to grant access again');
+        }
+    });
+}
+
+searchBtn.addEventListener('click', getcityCoordinates);
+locationBtn.addEventListener('click', getUserCoordinates);
+cityInput.addEventListener('keyup', e => e.key === 'ENTER' && getcityCoordinates());
+window.addEventListener('load', getUserCoordinates);
 
 
-};
-searchBtn.addEventListener("click", () => {
-    checkWeather(searchBox.value);
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="; // URL for current data fetch
+
+
+
+
+
+// forcastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`,
+//  WetherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`,
+// https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apikey}
