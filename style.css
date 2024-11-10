@@ -5,16 +5,6 @@
 }
 
 body {
-    /*     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
- */
-
-    /* background-color: cadetblue; */
-    /* background-color: cadetblue; */
-    /*height: 935px;
-    background-color:lightgray; */
-    /* background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%); */
-    /* background:linear-gradient(135deg, #00feba ,#5b548a); */
     min-height: 99vh;
     background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
     padding: 0 15px;
@@ -38,9 +28,9 @@ hr {
 }
 
 .containr {
-    margin: 8px;
+    margin: 5px;
 }
-
+/* inpute box and search button  */
 .header {
     display: flex;
     justify-content: space-around;
@@ -84,7 +74,7 @@ hr {
 .weather-icon {
     width: 75px;
 }
-
+/* Cards Desiging */
 .card {
     background: var(--bg-color3);
     padding: 15px;
@@ -262,6 +252,35 @@ hr {
 .icon img {
     width: 75px;
 }
+/* git link add */
+.gitlinkadd{
+    width: 50px;
+    height: 25px;
+    margin: auto;
+    color: #fff;
+}
+.gitlinkadd:hover{
+    color:gold;
+    border-bottom: 2px solid;
+}
+/* footer */
+footer {
+    height: 20px;
+    margin-top: 5px;
+   
+}
+
+.writ {
+   
+    text-align: center;
+    border-top: 2px solid white;
+}
+
+.writ i {
+    color: #fff;
+    font-weight: bold;
+}
+
 
 @media(max-width: 655px) {
     .weather-data {
