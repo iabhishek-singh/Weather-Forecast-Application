@@ -203,7 +203,7 @@ function getWeatherDetails(name, lat, lon, country, state) {
 function getcityCoordinates() {
     let cityName = cityInput.value;
     if (!cityName) return;
-    let GEOCODING_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apikey}`;
+    let GEOCODING_API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apikey}`;
 
     fetch(GEOCODING_API_URL).then(res => res.json()).then(data => {
         let { name, lat, lon, country, state } = data[0];
