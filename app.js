@@ -15,9 +15,9 @@ let fiveDaysForecastCard = document.querySelector('.day-forecast'),
     hourlyForecastCard = document.querySelector('.hourly-forcecast');
 
 function getWeatherDetails(name, lat, lon, country, state) {
-    let FORECAST_API_URL = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`,
-        WEATHER_API_URL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`,
-        AIR_POLLUTTION_API_URL = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apikey}`,
+    let FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`,
+        WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`,
+        AIR_POLLUTTION_API_URL = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apikey}`,
         days = [
             'Sunday',
             'Monday',
